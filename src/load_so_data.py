@@ -71,7 +71,7 @@ def _insert_into_postgres(cursor, table_name, tuples):
 def insert_into_postgres_batches(file, batch_max_size=100):
     '''
     '''
-    with psycopg2.connect('user=postgres, database=stackoverflow') as conn:
+    with psycopg2.connect('user=postgres dbname=stackoverflow') as conn:
         with conn.cursor() as cursor:
             with open(file) as f:
                 batch_size = 0
