@@ -7,7 +7,8 @@ def test_read_so_data():
         f.readline()
         match = []
         for line in f:
-            match.append(_filter_post(line, 'datetime'))
+            line, tags = _filter_post(line, 'datetime')
+            match.append(line)
 
         assert match[0]
         assert not match[1]
