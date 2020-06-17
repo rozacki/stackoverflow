@@ -2,6 +2,7 @@ import xml.etree.ElementTree as et
 import argparse
 import logging
 import psycopg2
+import psycopg2.extras
 import xml.etree.ElementTree as et
 
 
