@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 fasttext = "==0.9.2"
 pytest = "*"
+psycopg2 = "==2.8.5"
 
 [requires]
 python_version = "3.6.8"
