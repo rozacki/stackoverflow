@@ -35,7 +35,7 @@ def _get_dictionary(xml_line):
     try:
         root = et.fromstring(xml_line)
     except Exception as ex:
-        logging.error(f'Exception {ex}, xml line `{xml_line}`')
+        logging.error(f'Exception {ex}, xml line {xml_line}')
         return None
 
     return { 'id': root.get('Id'),
