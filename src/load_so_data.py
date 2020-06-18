@@ -63,7 +63,7 @@ def _get_dictionary(xml_line):
 
 def _insert_into_postgres(cursor, table_name, tuples):
     sql = f'insert into {table_name} values (%(id)s, %(post_type)s, %(parent_id)s, %(accepted_answer_id)s,' \
-        f'%(creation_date)s, %(score)s, %(view_count)s, %(body),%(owner_user_id)s,%(last_editor_user_id)s,' \
+        f'%(creation_date)s, %(score)s, %(view_count)s, %(body)s ,%(owner_user_id)s ,%(last_editor_user_id)s,' \
         f'%(last_editor_display_name)s,%(last_edit_date)s,%(last_activity_date)s,%(community_owned_date)s,' \
         f'%(close_date)s,%(title)s,%(answer_count)s,%(comment_count)s,%(favorite_count)s)'
     psycopg2.extras.execute_batch(cursor, sql, tuples)
@@ -85,6 +85,7 @@ def insert_into_postgres_batches(file, batch_max_size=1000):
                         if batch_max_size == batch_size:
                             _insert_into_postgres(cursor, 'posts', vals)
                             batch_size = 0
+                            vals.clear()
 
 
 if __name__== '__main__':
