@@ -79,11 +79,13 @@ def insert_into_postgres_batches(file, batch_max_size=1000):
                 vals = []
                 for line in f:
                     val = _get_dictionary(line)
+                    # todo: if this is last line the insert will never be executed
                     if val:
                         vals.append(val)
                         batch_size = batch_size + 1
                         if batch_max_size == batch_size:
                             _insert_into_postgres(cursor, 'posts', vals)
+                            logging.info(f'inserted {batch_size} ')
                             batch_size = 0
                             vals.clear()
 
