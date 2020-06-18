@@ -75,18 +75,16 @@ def insert_into_postgres_batches(file, batch_max_size=1000):
     with psycopg2.connect('user=postgres dbname=stackoverflow') as conn:
         with conn.cursor() as cursor:
             with open(file) as f:
-                batch_size = 0
                 vals = []
                 for line in f:
                     val = _get_dictionary(line)
                     # todo: if this is last line the insert will never be executed
                     if val:
                         vals.append(val)
-                        batch_size = batch_size + 1
-                        if batch_max_size == batch_size:
+                        if batch_max_size == len(vals):
+                            logging.info(f'start to insert {len(vals)}')
                             _insert_into_postgres(cursor, 'posts', vals)
-                            logging.info(f'inserted {batch_size} ')
-                            batch_size = 0
+                            logging.info(f'inserted {len(vals)}')
                             vals.clear()
 
 
