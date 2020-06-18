@@ -41,7 +41,7 @@ def _get_dictionary(xml_line):
 
     return { 'id': root.get('Id'),
     'post_type': root.get('PostTypeId'),
-    'parent_id': root.get('ParentID'),
+    'parent_id': root.get('ParentId'),
     'accepted_answer_id': root.get('AcceptedAnswerId'),
     'creation_date': root.get('CreationDate'),
     'score': root.get('Score'),
@@ -54,6 +54,7 @@ def _get_dictionary(xml_line):
     'last_activity_date': root.get('LastActivityDate'),
     'community_owned_date': root.get('CommunityOwnedDate'),
     'close_date': root.get('ClosedDate'),
+    'tags': root.get('Tags'),
     'title': root.get('Title'),
     'answer_count': root.get('AnswerCount'),
     'comment_count': root.get('CommentCount'),
@@ -65,7 +66,7 @@ def _insert_into_postgres(cursor, table_name, tuples):
     sql = f'insert into {table_name} values (%(id)s, %(post_type)s, %(parent_id)s, %(accepted_answer_id)s,' \
         f'%(creation_date)s, %(score)s, %(view_count)s, %(body)s ,%(owner_user_id)s ,%(last_editor_user_id)s,' \
         f'%(last_editor_display_name)s,%(last_edit_date)s,%(last_activity_date)s,%(community_owned_date)s,' \
-        f'%(close_date)s,%(title)s,%(answer_count)s,%(comment_count)s,%(favorite_count)s)'
+        f'%(close_date)s, %(tags)s, %(title)s, %(answer_count)s, %(comment_count)s,%(favorite_count)s)'
     psycopg2.extras.execute_batch(cursor, sql, tuples)
 
 
@@ -77,6 +78,7 @@ def insert_into_postgres_batches(file, batch_max_size=1000):
             with open(file) as f:
                 vals = []
                 total_inserted = 0
+                # todo: last batch does not go through
                 for line in f:
                     val = _get_dictionary(line)
                     # todo: if this is last line the insert will never be executed
@@ -87,6 +89,10 @@ def insert_into_postgres_batches(file, batch_max_size=1000):
                             total_inserted = total_inserted + len(vals)
                             logging.info(f'total inserted {total_inserted}')
                             vals.clear()
+    if len(vals) > 0:
+        _insert_into_postgres(cursor, 'posts', vals)
+        total_inserted = total_inserted + len(vals)
+        logging.info(f'total inserted {total_inserted}')
 
 
 if __name__== '__main__':
