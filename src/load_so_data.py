@@ -92,4 +92,5 @@ if __name__== '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--file', required=True)
     args = parser.parse_args()
+    logging.getLogger().setLevel(logging.INFO)
     insert_into_postgres_batches(args.file)
