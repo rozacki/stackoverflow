@@ -26,5 +26,5 @@ favorite_count integer
 alter table posts set unlogged;
 
 -- Disable indexes for fast inserts
--- alter table posts add primary key (id)
--- create index if not exists parent_id_idx on posts (parent_id);
+--alter table posts add primary key (id);
+--create index if not exists parent_id_idx on posts (parent_id);
