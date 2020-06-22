@@ -1,4 +1,7 @@
-from src import get_logger
+'''
+Posts preparation steps
+'''
+from so import get_logger
 import bs4
 import spacy
 

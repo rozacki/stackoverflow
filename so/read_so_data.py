@@ -1,9 +1,12 @@
+'''
+Was used to read data xml file and do some data mining
+'''
 import xml.etree.ElementTree as et
 import argparse
 import logging
 
 
-def _filter_post(xml_line, tag):
+def filter_post(xml_line, tag):
     try:
         root = et.fromstring(xml_line)
     except Exception as ex:
@@ -23,7 +26,7 @@ def count(file, tag):
         f.readline()
         f.readline()
         for line in f:
-            _, line = _filter_post(line, tag)
+            _, line = filter_post(line, tag)
             if line:
                 count = count + 1
 
@@ -38,7 +41,7 @@ def filter_posts_csv(file, tag):
         f.readline()
         f.readline()
         for line in f:
-            line, tags = _filter_post(line, tag)
+            line, tags = filter_post(line, tag)
             if line:
                 print(','.join(tags))
 
@@ -50,7 +53,7 @@ def filter_posts(file, tag):
         f.readline()
         f.readline()
         for line in f:
-            line, tags = _filter_post(line, tag)
+            line, tags = filter_post(line, tag)
             if line:
                 print(line)
 

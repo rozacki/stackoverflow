@@ -1,4 +1,4 @@
-from src.prep_post import get_markup_texts, get_lemmas, remove_stop_words, remove_short_and_numeric_words
+from so.preparation import *
 
 
 def test_get_markup_texts():

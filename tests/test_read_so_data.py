@@ -1,4 +1,4 @@
-from src.read_so_data import _filter_post
+from so.read_so_data import *
 
 
 def test_read_so_data():
@@ -7,7 +7,7 @@ def test_read_so_data():
         f.readline()
         match = []
         for line in f:
-            line, tags = _filter_post(line, 'datetime')
+            line, tags = filter_post(line, 'datetime')
             match.append(line)
 
         assert match[0]

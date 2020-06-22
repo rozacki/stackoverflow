@@ -1,4 +1,6 @@
-import xml.etree.ElementTree as et
+'''
+Load stackoverflow data to postgres table
+'''
 import argparse
 import logging
 import psycopg2
